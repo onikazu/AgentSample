@@ -51,8 +51,9 @@ class BasePlayer(threading.Thread):
     def run(self):
         while True:
             message = self.receive()
-            # print(message)
+            print(message)
             self.analyzeMessage(message)
+
 
     # messageの解析を行う関数
     def analyzeMessage(self, message):
