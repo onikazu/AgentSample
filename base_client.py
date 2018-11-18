@@ -61,9 +61,13 @@ class BasePlayer(threading.Thread):
 
 if __name__ == "__main__":
     players = []
-    for i in range(11):
+    for i in range(22):
         p = BasePlayer()
         players.append(p)
-        players[i].initialize(i+1, "kazu", "localhost", 6000)
+        if i < 11:
+            team_name = "Left"
+        else:
+            team_name = "Right"
+        players[i].initialize(i%11+1, team_name, "localhost", 6000)
         players[i].start()
     print("試合登録完了")
