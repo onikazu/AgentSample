@@ -1,6 +1,6 @@
 import analyze.robo_tools
 
-def analyzeVisualMessage(message, play_mode):
+def analyzeVisualMessage(message, play_mode, dKickOffX, dKickOffY):
     OUT_OF_RANGE = 999
     time = int(analyze.robo_tools.getParam(message, "see", 1))
     if time < 1:
@@ -9,8 +9,8 @@ def analyzeVisualMessage(message, play_mode):
     if d_neck == OUT_OF_RANGE:
         return
     if analyze.robo_tools.checkInitialMode(play_mode):
-        d_x = self.m_dKickOffX
-        d_y = self.m_dKickOffY
+        d_x = dKickOffX
+        d_y = dKickOffY
 
     pos = self.estimatePosition(message, d_neck, d_x, d_y)
     d_x = pos["x"]

@@ -7,6 +7,7 @@ from socket import *
 import threading
 import sys
 import os
+import csv
 
 from analyze import *
 
@@ -24,6 +25,8 @@ class BaseClient(threading.Thread):
         self.m_iNumber = 0
         self.m_strTeamName = ""
         self.m_strHostName = ""
+        self.m_kick_off_x = 0
+        self.m_kick_off_y = 0
 
         # メッセージの解析結果を代入する変数
         self.init_result = {}
@@ -36,6 +39,9 @@ class BaseClient(threading.Thread):
 
         # コマンドを代入する変数
         self.m_strCommand = ""
+
+        # フィールドのモードを代入する変数
+        self.play_mode = ""
 
     # コマンドの送信
     def send(self, command):
@@ -74,6 +80,7 @@ class BaseClient(threading.Thread):
 
     # thread を動かしている最中に行われる関数
     def run(self):
+        self.setKickOffPosition()
         while True:
             message = self.receive()
             print(message)
@@ -85,7 +92,7 @@ class BaseClient(threading.Thread):
             self.init_result = analyze.analyzeInitialMessage(message)
         # 視覚メッセージの処理
         elif message.startswith("(see "):
-            self.visual_result = analyze.analyzeVisualMessage(message, )
+            self.visual_result = analyze.analyzeVisualMessage(message, self.play_mode)
         # 体調メッセージの処理
         elif message.startswith("(sense_body "):
             self.physical_result = analyze.analyzePhysicalMessage(message)
@@ -93,7 +100,10 @@ class BaseClient(threading.Thread):
             self.physical_result, self.player_type_result)
         # 聴覚メッセージの処理
         elif message.startswith("(hear "):
-            self.aural_result = analyze.analyzeAuralMessage(message)
+            self.aural_result, play_mode = analyze.analyzeAuralMessage(message)
+            # プレイモードが観測できたら更新
+            if play_mode == "":
+                self.play_mode = play_mode
         # サーバパラメータの処理
         elif message.startswith("(server_param"):
             self.server_param_result = analyze.analyzeServerParam(message)
@@ -110,6 +120,15 @@ class BaseClient(threading.Thread):
 
     def play(self, init_result, visual_result, aural_result, physical_result, player_type_result):
         return
+
+    def setKickOffPosition(self):
+        with open("./formation", "r") as f:
+            reader = csv.reader(f)
+            header = next(reader)
+            for row in reader:
+                if self.m_iNumber == row[0]:
+                    self.m_kick_off_x = row[1]
+                    self.m_kick_off_y = row[2]
 
 
 if __name__ == "__main__":
