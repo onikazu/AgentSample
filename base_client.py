@@ -82,26 +82,26 @@ class BaseClient(threading.Thread):
     # messageの解析を行う関数
     def analyzeMessage(self, message):
         if message.startswith("(init "):
-            self.init_result = analyze_init.analyzeInitialMessage(message)
+            self.init_result = analyze.analyzeInitialMessage(message)
         # 視覚メッセージの処理
         elif message.startswith("(see "):
-            self.visual_result = analyze_visual.analyzeVisualMessage(message, )
+            self.visual_result = analyze.analyzeVisualMessage(message, )
         # 体調メッセージの処理
         elif message.startswith("(sense_body "):
-            self.physical_result = analyze_physical.analyzePhysicalMessage(message)
+            self.physical_result = analyze.analyzePhysicalMessage(message)
             self.play()
         # 聴覚メッセージの処理
         elif message.startswith("(hear "):
-            self.aural_result = analyze_aural.analyzeAuralMessage(message)
+            self.aural_result = analyze.analyzeAuralMessage(message)
         # サーバパラメータの処理
         elif message.startswith("(server_param"):
-            self.server_param_result = analyze_server.analyzeServerParam(message)
+            self.server_param_result = analyze.analyzeServerParam(message)
         # プレーヤーパラメータの処理
         elif message.startswith("(player_param"):
-            self.player_param_result = analyze_player.analyzePlayerParam(message)
+            self.player_param_result = analyze.analyzePlayerParam(message)
         # プレーヤータイプの処理
         elif message.startswith("(player_type"):
-            self.player_type_result = analyze_player_type.analyzePlayerType(message)
+            self.player_type_result = analyze.analyzePlayerType(message)
         # エラーの処理
         else:
             print("サーバーからエラーが伝えられた:", message)
