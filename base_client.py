@@ -122,7 +122,7 @@ class BaseClient(threading.Thread):
         return
 
     def setKickOffPosition(self):
-        with open("./formation", "r") as f:
+        with open("./formation/init.csv", "r") as f:
             reader = csv.reader(f)
             header = next(reader)
             for row in reader:
