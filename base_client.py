@@ -1,16 +1,41 @@
+"""
+基本的な機能を備えたサッカーエージェント
+戦略等は未実装
+"""
+
 from socket import *
 import threading
 import sys
 import os
 
+from analyze import *
 
-class BasePlayer(threading.Thread):
+
+class BaseClient(threading.Thread):
     def __init__(self):
         threading.Thread.__init__(self)
+        # サーバ接続のための変数
         self.socket = socket(AF_INET, SOCK_DGRAM)
         self.HOSTNAME = "localhost"
         self.PORT = 6000
         self.ADDRESS = gethostbyname(self.HOSTNAME)
+
+        # クライアントの基本情報を代入する変数
+        self.m_iNumber = number
+        self.m_strTeamName = team_name
+        self.m_strHostName = server_name
+
+        # メッセージの解析結果を代入する変数
+        self.init_result = {}
+        self.visual_result = {}
+        self.physical_result = {}
+        self.aural_result = {}
+        self.player_type_result = {}
+        self.player_param_result = {}
+        self.server_param_result = {}
+
+        # コマンドを代入する変数
+        self.m_strCommand = ""
 
     # コマンドの送信
     def send(self, command):
@@ -54,16 +79,42 @@ class BasePlayer(threading.Thread):
             print(message)
             self.analyzeMessage(message)
 
-
     # messageの解析を行う関数
     def analyzeMessage(self, message):
+        if message.startswith("(init "):
+            self.init_result = analyze_init.analyzeInitialMessage(message)
+        # 視覚メッセージの処理
+        elif message.startswith("(see "):
+            self.visual_result = analyze_visual.analyzeVisualMessage(message, )
+        # 体調メッセージの処理
+        elif message.startswith("(sense_body "):
+            self.physical_result = analyze_physical.analyzePhysicalMessage(message)
+            self.play()
+        # 聴覚メッセージの処理
+        elif message.startswith("(hear "):
+            self.aural_result = analyze_aural.analyzeAuralMessage(message)
+        # サーバパラメータの処理
+        elif message.startswith("(server_param"):
+            self.server_param_result = analyze_server.analyzeServerParam(message)
+        # プレーヤーパラメータの処理
+        elif message.startswith("(player_param"):
+            self.player_param_result = analyze_player.analyzePlayerParam(message)
+        # プレーヤータイプの処理
+        elif message.startswith("(player_type"):
+            self.player_type_result = analyze_player_type.analyzePlayerType(message)
+        # エラーの処理
+        else:
+            print("サーバーからエラーが伝えられた:", message)
+            print("エラー発生原因のコマンドは右記の通り :", self.m_strCommand)
+
+    def play(self, init_result, visual_result, aural_result, physical_result, player_type_result):
         return
 
 
 if __name__ == "__main__":
     players = []
     for i in range(22):
-        p = BasePlayer()
+        p = BaseClient()
         players.append(p)
         if i < 11:
             team_name = "Left"
