@@ -83,7 +83,7 @@ class BaseClient(threading.Thread):
         self.setKickOffPosition()
         while True:
             message = self.receive()
-            print(message)
+            # print(message)
             self.analyzeMessage(message)
 
     # messageの解析を行う関数
