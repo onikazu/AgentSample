@@ -92,7 +92,8 @@ class BaseClient(threading.Thread):
             self.init_result = analyze.analyzeInitialMessage(message)
         # 視覚メッセージの処理
         elif message.startswith("(see "):
-            self.visual_result = analyze.analyzeVisualMessage(message, self.play_mode)
+            self.visual_result = analyze.analyzeVisualMessage(message, \
+            self.play_mode, self.m_kick_off_x, self.m_kick_off_y)
         # 体調メッセージの処理
         elif message.startswith("(sense_body "):
             self.physical_result = analyze.analyzePhysicalMessage(message)
