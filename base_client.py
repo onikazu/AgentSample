@@ -89,7 +89,8 @@ class BaseClient(threading.Thread):
         # 体調メッセージの処理
         elif message.startswith("(sense_body "):
             self.physical_result = analyze.analyzePhysicalMessage(message)
-            self.play()
+            self.play(self.init_result, self.visual_result, self.aural_result, \
+            self.physical_result, self.player_type_result)
         # 聴覚メッセージの処理
         elif message.startswith("(hear "):
             self.aural_result = analyze.analyzeAuralMessage(message)
