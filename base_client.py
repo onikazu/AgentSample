@@ -21,9 +21,9 @@ class BaseClient(threading.Thread):
         self.ADDRESS = gethostbyname(self.HOSTNAME)
 
         # クライアントの基本情報を代入する変数
-        self.m_iNumber = number
-        self.m_strTeamName = team_name
-        self.m_strHostName = server_name
+        self.m_iNumber = 0
+        self.m_strTeamName = ""
+        self.m_strHostName = ""
 
         # メッセージの解析結果を代入する変数
         self.init_result = {}
