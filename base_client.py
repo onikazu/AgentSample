@@ -62,8 +62,8 @@ class BaseClient(threading.Thread):
             message, arr = self.socket.recvfrom(4096)
             message = message.decode("UTF-8")
             self.PORT = arr[1]
-            if self.m_iNumber == 1:
-                # print(message)
+            # if self.m_iNumber == 1:
+            #     print(message)
             return message
         except OSError:
             print("受信失敗")
