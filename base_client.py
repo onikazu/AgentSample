@@ -63,7 +63,7 @@ class BaseClient(threading.Thread):
             message = message.decode("UTF-8")
             self.PORT = arr[1]
             if self.m_iNumber == 1:
-                print(message)
+                # print(message)
             return message
         except OSError:
             print("受信失敗")
@@ -127,6 +127,7 @@ class BaseClient(threading.Thread):
             self.setKickOffPosition()
             command = "(move " + str(self.m_kick_off_x) + " " \
                 + str(self.m_kick_off_y) + ")"
+            print(command)
             self.send(command)
 
     def setKickOffPosition(self):
