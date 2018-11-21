@@ -122,7 +122,7 @@ class BaseClient(threading.Thread):
             print("エラー発生原因のコマンドは右記の通り :", self.m_strCommand)
 
     def play(self, init_result, visual_result, aural_result, physical_result, player_type_result):
-        if analyze.checkInitialMode():
+        if analyze.checkInitialMode(self.play_mode):
             self.setKickOffPosition()
             command = "(move " + str(self.m_kick_off_x) + " " \
                 + str(self.m_kick_off_y) + ")"
