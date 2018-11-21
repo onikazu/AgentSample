@@ -28,6 +28,7 @@ class BaseClient(threading.Thread):
         self.m_kick_off_x = 0
         self.m_kick_off_y = 0
 
+
         # メッセージの解析結果を代入する変数
         self.init_result = {}
         self.visual_result = {}
