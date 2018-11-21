@@ -92,6 +92,7 @@ class BaseClient(threading.Thread):
     def analyzeMessage(self, message):
         if message.startswith("(init "):
             self.init_result = analyze.analyzeInitialMessage(message)
+            self.play_mode = self.init_result["play_mode"]
         # 視覚メッセージの処理
         elif message.startswith("(see "):
             self.visual_result = analyze.analyzeVisualMessage(message, \
