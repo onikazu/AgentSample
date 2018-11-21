@@ -12,7 +12,7 @@ def analyzeVisualMessage(message, play_mode, dKickOffX, dKickOffY):
         d_x = dKickOffX
         d_y = dKickOffY
 
-    pos = self.estimatePosition(message, d_neck, d_x, d_y)
+    pos = analyze.robo_tools.estimatePosition(message, d_neck, d_x, d_y)
     d_x = pos["x"]
     d_y = pos["y"]
     if message.find("(b)") == -1:
