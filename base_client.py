@@ -135,9 +135,9 @@ class BaseClient(threading.Thread):
             reader = csv.reader(f)
             header = next(reader)
             for row in reader:
-                if self.m_iNumber == row[0]:
-                    self.m_kick_off_x = row[1]
-                    self.m_kick_off_y = row[2]
+                if self.m_iNumber == int(row[0]):
+                    self.m_kick_off_x = int(row[1])
+                    self.m_kick_off_y = int(row[2])
 
 
 if __name__ == "__main__":
