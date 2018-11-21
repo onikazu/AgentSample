@@ -83,7 +83,6 @@ class BaseClient(threading.Thread):
 
     # thread を動かしている最中に行われる関数
     def run(self):
-        self.setKickOffPosition()
         while True:
             message = self.receive()
             # print(message)
@@ -123,7 +122,11 @@ class BaseClient(threading.Thread):
             print("エラー発生原因のコマンドは右記の通り :", self.m_strCommand)
 
     def play(self, init_result, visual_result, aural_result, physical_result, player_type_result):
-        return
+        if analyze.checkInitialMode():
+            self.setKickOffPosition()
+            command = "(move " + str(self.m_kick_off_x) + " " \
+                + str(self.m_kick_off_y) + ")"
+            self.send(command)
 
     def setKickOffPosition(self):
         with open("./formation/init.csv", "r") as f:
